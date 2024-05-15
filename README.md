@@ -1,4 +1,7 @@
 # ShaderBakery
+
+https://github.com/chocola-mint/ShaderBakery/assets/56677134/d19dedb4-1727-41cb-a06a-0851e24dbd87
+
 Simple tool that enables developers to bake shader outputs to image resources in Godot.
 
 # How to use
