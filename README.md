@@ -2,7 +2,7 @@
 
 https://github.com/chocola-mint/ShaderBakery/assets/56677134/d19dedb4-1727-41cb-a06a-0851e24dbd87
 
-Simple tool that enables developers to bake shader outputs to image resources in Godot.
+Simple tool that enables developers to bake shader outputs to image resources in Godot. For Godot 4.
 
 # How to install
 Download the plugin from the "Releases" page, and move the folder "shader_bakery" into your "addons" folder.
