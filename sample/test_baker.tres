@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="ShaderBaker" load_steps=3 format=3 uid="uid://cjjxln0f8lahj"]
+
+[ext_resource type="Script" path="res://addons/shader_bakery/shader_baker.gd" id="1_a4cpl"]
+
+[sub_resource type="Shader" id="Shader_cnlqv"]
+code = "shader_type canvas_item;
+
+float random(vec2 uv) {
+    return fract(sin(dot(uv.xy,
+        vec2(12.9898,78.233))) *
+            43758.5453123);
+}
+
+float noise(vec2 uv) {
+    vec2 uv_index = floor(uv);
+    vec2 uv_fract = fract(uv);
+
+    // Four corners in 2D of a tile
+    float a = random(uv_index);
+    float b = random(uv_index + vec2(1.0, 0.0));
+    float c = random(uv_index + vec2(0.0, 1.0));
+    float d = random(uv_index + vec2(1.0, 1.0));
+
+    vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix(a, b, blur.x) +
+            (c - a) * blur.y * (1.0 - blur.x) +
+            (d - b) * blur.x * blur.y;
+}
+
+float fbm(vec2 uv) {
+    int octaves = 6;
+    float amplitude = 0.5;
+    float frequency = 3.0;
+	float value = 0.0;
+	
+    for(int i = 0; i < octaves; i++) {
+        value += amplitude * noise(frequency * uv);
+        amplitude *= 0.5;
+        frequency *= 2.0;
+    }
+    return value;
+}
+
+void fragment()
+{
+	float x = 0.0;
+	for (int i = 0; i < 4; i++) {
+		x = fbm(UV + vec2(x));
+	}
+	COLOR = vec4(vec3(1.0 - x), 1.0);
+}"
+
+[resource]
+script = ExtResource("1_a4cpl")
+shader = SubResource("Shader_cnlqv")
+directory = "res://sample"
+file_name = "test_out"
+texture_width = 2048
+texture_height = 2048
